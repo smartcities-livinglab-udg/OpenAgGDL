@@ -1,0 +1,18 @@
+<launch>
+	
+	<!--<arg name="environment_1" value="environments/environment_1" />-->
+
+	<rosparam command="load" file="$(find openaggdl)/launch/lion.v.01.yaml" />
+
+	<group ns="environments/environment_1">
+
+		<node
+			pkg="openaggdl"
+			type="sensor_info_publisher.py"
+			name="sensor_info_publisher">
+				<param name="variable" value="water_level_high" type="str"/>
+		</node>
+
+	</group>
+
+</launch>

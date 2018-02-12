@@ -1,0 +1,5 @@
+descargar proyecto en la ubicacion ~/catkin_ws/src/
+compilar paquete con comando catkin_make
+levantar ambiente haciendo uso de los archivos .launch [ roslaunch *.launch ]
+
+~ by rasztul
