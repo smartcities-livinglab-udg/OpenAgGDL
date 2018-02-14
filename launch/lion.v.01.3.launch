@@ -1,0 +1,51 @@
+<launch>
+	
+	<!--<arg name="environment_1" value="environments/environment_1" />-->
+
+	<rosparam command="load" file="$(find openaggdl)/launch/lion.v.01.yaml" />
+	<rosparam command="load" file="$(find openaggdl)/launch/lion_var_types.yaml" ns="var_types"/>
+
+	<group ns="environments/environment_1">
+
+		<node
+			pkg="openaggdl"
+			type="sensor_info_publisher.py"
+			name="sensor_info_publisher">
+				<param name="variable" value="water_level_high" type="str"/>
+		</node>
+
+		<node 
+			pkg="openaggdl" 
+			type="pid.py" 
+			name="water_potential_hydrogen_controller_1">
+				<param name="deadband_width" value="0.5" type="double"/>
+				<param name="windup_limit" value="1000" type="double"/>
+				<param name="upper_limit" value="1" type="double"/>
+				<param name="lower_limit" value="-1" type="double"/>
+				<param name="variable" value="water_potential_hydrogen" type="str"/>
+				<param name="Kp" value="0.25" type="double"/>
+				<param name="Ki" value="0.25" type="double"/>
+				<param name="Kd" value="0.75" type="double"/>
+	    </node>
+
+	    <node pkg="openaggdl" type="topic_filter.py" name="topic_filter_1"/>
+
+	    <node 
+	    	pkg="openaggdl" 
+	    	type="direct_controller.py"	 
+	    	name="light_controller_red_1">
+				<param name="variable" value="light_intensity_red" type="str"/>
+    	</node>
+
+		<node 
+			pkg="openaggdl" 
+			type="sensor_persistence.py" 
+			name="sensor_persistence_1">
+				<!-- TODO : local_storage and send data -->
+				<param name="max_update_interval" value="600" type="int"/>
+				<param name="min_update_interval" value="5" type="int"/>
+		</node>
+
+	</group>
+
+</launch>
