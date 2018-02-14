@@ -95,10 +95,17 @@ def test_create_persistence_objects(environment_id, max_update_interval, min_upd
 
         topic = "{}/measured".format(variable)
 
-        #"topic : " + topic + "\r\ntopic_type : Float64" + "\r\nenvironment : " + environment_id + "\r\nvariable : " + variable + "\r\nis_desired : False" + "\r\ndb : env_var_db"+ "\r\nmax_update_interval : " + max_update_interval + "\r\nmin_update_interval : " + min_update_interval
-        msg  = "topic : {} \r\ntopic_type : Float64 \r\nenvironment : {} \r\nvariable : {} \r\nis_desired : False \r\ndb : env_var_db \r\nmax_update_interval : {} \r\nmin_update_interval : {}".format(topic, environment_id, variable, max_update_interval, min_update_interval )
+        msg  = "topic : {}".format(topic)
+        msg  += " | topic_type : Float64 " 
+        msg  += " | environment : {} ".format(environment)
+        msg  += " | variable : {} ".format(variable)
+        msg  += " | is_desired : False "
+        msg  += " | db : env_var_db"
+        msg  += " | max_update_interval : {} ".format(max_update_interval)
+        msg  += " | min_update_interval : {}".format(min_update_interval)
+
         #rospy.logdebug(msg)
-        rospy.loginfo(msg)
+        rospy.logwarn(msg)
 
        
 if __name__ == '__main__':
