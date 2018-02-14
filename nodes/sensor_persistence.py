@@ -97,7 +97,7 @@ def test_create_persistence_objects(environment_id, max_update_interval, min_upd
 
         msg  = "topic : {}".format(topic)
         msg  += " | topic_type : Float64 " 
-        msg  += " | environment : {} ".format(environment)
+        msg  += " | environment : {} ".format(environment_id)
         msg  += " | variable : {} ".format(variable)
         msg  += " | is_desired : False "
         msg  += " | db : env_var_db"
