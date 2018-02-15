@@ -30,6 +30,9 @@
 
 	    <node pkg="openaggdl" type="topic_filter.py" name="topic_filter_1"/>
 
+		<node pkg="openaggdl" type="recipe_handler.py" name="recipe_handler_1"/>
+
+
 	    <node 
 	    	pkg="openaggdl" 
 	    	type="direct_controller.py"	 

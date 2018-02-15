@@ -8,7 +8,7 @@ from openaggdl.msg import SensorInfo
 from openag_brain.models import FirmwareModule, FirmwareModuleType
 from openag_lib.config import config as cli_config
 from openag_lib.firmware.util import synthesize_firmware_module_info
-#from couchdb import Server
+from couchdb import Server
 
 def publish_sensor_info(mod_id, variable, info):
     # Build the topic name
@@ -27,10 +27,10 @@ if __name__ == '__main__':
     rospy.init_node("sensor_info_publisher")
 
     # Connect to the DB server
-    #db_server = cli_config["local_server"]["url"]
-    #if not db_server:
-    #    raise RuntimeError("No local server specified")
-    #server = Server(db_server)
+    db_server = cli_config["local_server"]["url"]
+    if not db_server:
+       raise RuntimeError("No local server specified")
+    server = Server(db_server)
 
     # Get info on all of the modules
     firmware_module = rospy.get_param("/firmware_module")

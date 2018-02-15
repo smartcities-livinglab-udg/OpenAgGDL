@@ -11,7 +11,7 @@ import time
 
 import rospy
 import rostopic
-#from couchdb import Server
+from couchdb import Server
 from std_msgs.msg import Float64
 
 from openag_lib.db_bootstrap.db_names import ENVIRONMENTAL_DATA_POINT
@@ -109,10 +109,10 @@ def test_create_persistence_objects(environment_id, max_update_interval, min_upd
 
        
 if __name__ == '__main__':
-    # db_server = cli_config["local_server"]["url"]
-    # if not db_server:
-    #     raise RuntimeError("No local database specified")
-    # server = Server(db_server)
+    db_server = cli_config["local_server"]["url"]
+    if not db_server:
+        raise RuntimeError("No local database specified")
+    server = Server(db_server)
     rospy.init_node('sensor_persistence')
     try:
         max_update_interval = rospy.get_param("~max_update_interval")
@@ -132,12 +132,12 @@ if __name__ == '__main__':
         min_update_interval = 5
     environment_id = read_environment_from_ns(rospy.get_namespace())
     
-    test_create_persistence_objects( environment_id, max_update_interval=max_update_interval, min_update_interval=min_update_interval )
+    # test_create_persistence_objects( environment_id, max_update_interval=max_update_interval, min_update_interval=min_update_interval )
     
-    # create_persistence_objects(
-    #     server, environment_id,
-    #     max_update_interval=max_update_interval,
-    #     min_update_interval=min_update_interval
-    # )
+    create_persistence_objects(
+        server, environment_id,
+        max_update_interval=max_update_interval,
+        min_update_interval=min_update_interval
+    )
 
     rospy.spin()
