@@ -98,8 +98,8 @@ class RecipeHandler:
         # We create a lock to ensure threadsafety, since service handlers are
         # run in a separate thread by ROS.
         self.lock = RLock()
-        # self.env_data_db = server[ENVIRONMENTAL_DATA_POINT]
-        # self.recipe_db = server[RECIPE]
+        self.env_data_db = server[ENVIRONMENTAL_DATA_POINT]
+        self.recipe_db = server[RECIPE]
         self.environment = environment
         self.__start_time = None
         self.__recipe = None
@@ -155,8 +155,8 @@ class RecipeHandler:
             return False, "\"{}\" does not reference a valid "\
             "recipe".format(recipe_id)
 
-        #trace("recipe_handler: PUBLISHERS=%s", PUBLISHERS)
-        #trace("recipe_handler: recipe=%s", recipe)
+        trace("recipe_handler: PUBLISHERS=%s", PUBLISHERS)
+        trace("recipe_handler: recipe=%s", recipe)
 
         try:
             # Set the recipe document
