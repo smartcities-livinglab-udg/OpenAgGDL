@@ -98,8 +98,8 @@ class RecipeHandler:
         # We create a lock to ensure threadsafety, since service handlers are
         # run in a separate thread by ROS.
         self.lock = RLock()
-        self.env_data_db = server[ENVIRONMENTAL_DATA_POINT]
-        self.recipe_db = server[RECIPE]
+        # self.env_data_db = server[ENVIRONMENTAL_DATA_POINT]
+        # self.recipe_db = server[RECIPE]
         self.environment = environment
         self.__start_time = None
         self.__recipe = None
@@ -261,6 +261,7 @@ if __name__ == '__main__':
             String, queue_size=10)
     else:
         rospy.init_node("recipe_handler")
+    
     db_server = config["local_server"]["url"]
 
     if not db_server:
