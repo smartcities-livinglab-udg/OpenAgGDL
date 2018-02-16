@@ -1,0 +1,36 @@
+---
+# Firmware categories to include
+categories:
+- sensors
+- actuators
+- persistence
+- control
+firmware_module:
+
+- _id: HTU21D_TEMP
+  type: HTU21D
+  arguments:
+  - 5
+  environment: environment_1
+  outputs:
+    temperature:
+      variable: air_temperature
+
+- _id: HTU21D_HUM
+  type: HTU21D
+  arguments:
+  - 5
+  environment: environment_1
+  outputs:
+    temperature:
+      variable: air_humidity
+
+
+- _id: TSL2561_LIGHT
+  type: TSL2561
+  arguments:
+  - 5
+  environment: environment_1
+  outputs:
+    temperature:
+      variable: light_intensity

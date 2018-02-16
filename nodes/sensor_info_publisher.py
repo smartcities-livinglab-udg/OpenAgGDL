@@ -34,15 +34,17 @@ if __name__ == '__main__':
 
     # Get info on all of the modules
     firmware_module = rospy.get_param("/firmware_module")
-    firmware_module_type = rospy.get_param("/firmware_module_type")
     modules = {
         record["_id"]: FirmwareModule(record) for record in
         firmware_module if not record["_id"].startswith('_')
     }
-    module_types = {
-        record["_id"]: FirmwareModuleType(record) for record in
-        firmware_module_type if not record["_id"].startswith('_')
-    }
+    # firmware_module_type se utiliza para compilador de arduino
+    # firmware_module_type = rospy.get_param("/firmware_module_type")
+    # module_types = {
+    #     record["_id"]: FirmwareModuleType(record) for record in
+    #     firmware_module_type if not record["_id"].startswith('_')
+    # }
+    module_types  = {}
     modules = synthesize_firmware_module_info(modules, module_types)
 
     for module_id, module_info in modules.items():
