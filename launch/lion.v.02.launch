@@ -1,0 +1,18 @@
+<launch>
+	
+	<!--<arg name="environment_1" value="environments/environment_1" />-->
+
+	<rosparam command="load" file="$(find openaggdl)/launch/lion.v.02.yaml" />
+	<rosparam command="load" file="$(find openaggdl)/launch/lion_var_types.v.02.yaml" ns="var_types"/>
+
+	<group ns="environments/environment_1">
+
+		<node
+			pkg="openaggdl"
+			type="sensor_info_publisher.py"
+			name="sensor_info_publisher"
+			/>
+
+	</group>
+
+</launch>

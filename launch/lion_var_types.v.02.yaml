@@ -1,0 +1,20 @@
+environment_variables:
+  
+  air_temperature:
+    name: air_temperature
+    description: "Temperature of the air in degrees Celcius"
+    units: "degrees C"
+    type: "std_msgs/Float64"
+  
+  air_humidity:
+    name: air_humidity
+    description: "A measure of the concentration of water in the air relative to the maximum concentration at the current temperature"
+    units: "percent relative"
+    type: "std_msgs/Float64"
+  
+  light_intensity:
+    name: light_intensity
+    description: "The intensity setting for light panel"
+    units: "percent relative"
+    type: "std_msgs/Float64"
+
