@@ -27,7 +27,7 @@ if __name__ == '__main__':
 	with HTU21D(1) as sensor:
 		while not rospy.is_shutdown():
 			data = sensor.read_temperature()
-			if data in not None:
+			if data is not None:
 				htu21d_pub.publish(data)
 
 			r.sleep()
