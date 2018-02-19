@@ -12,6 +12,22 @@
 			type="topic_filter.py" 
 			name="topic_filter_1"/>
 
+		<node 
+			pkg="openaggdl" 
+			type="sensor_htu21df.py" 
+			name="htu21df_temp_1" >
+				<param name="temp" value="True" type="bool"/>
+				<param name="rate_hz" value="1" type="int"/>
+		</node>
+
+		<node 
+			pkg="openaggdl" 
+			type="sensor_htu21df.py" 
+			name="htu21df_hum_1" >
+				<param name="temp" value="False" type="bool"/>
+				<param name="rate_hz" value="1" type="int"/>
+		</node>
+
 	</group>
 
 </launch>
