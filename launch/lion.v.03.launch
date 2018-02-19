@@ -1,0 +1,17 @@
+<launch>
+	
+	<!--<arg name="environment_1" value="environments/environment_1" />-->
+
+	<rosparam command="load" file="$(find openaggdl)/launch/lion.v.03.yaml" />
+	<rosparam command="load" file="$(find openaggdl)/launch/lion_var_types.v.03.yaml" ns="var_types"/>
+
+	<group ns="environments/astrid">
+		
+		<node 
+			pkg="openaggdl" 
+			type="topic_filter.py" 
+			name="topic_filter_1"/>
+
+	</group>
+
+</launch>

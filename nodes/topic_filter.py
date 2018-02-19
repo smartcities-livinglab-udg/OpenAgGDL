@@ -2,12 +2,13 @@
 import rospy
 
 from std_msgs.msg import Float64
-from openag_brain.load_env_var_types import create_variables
-from openag_brain.constants import SENTINELS
+from libs.load_env_var_types import create_variables
+from libs.constants import SENTINELS
 
 # Filter a list of environmental variables that are specific to environment
 # sensors and actuators
 ENVIRONMENT_VARIABLES = create_variables(rospy.get_param('/var_types/environment_variables'))
+
 
 class EWMA:
     """
