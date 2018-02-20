@@ -65,7 +65,7 @@ class HTU21D(object):
 		else:
 			return False
 	
-	def read_tmperature(self):
+	def read_temperature(self):
 		self.dev.write(CMD_READ_TEMP_NOHOLD) #measure temp
 		time.sleep(.1)
 
@@ -93,5 +93,5 @@ class HTU21D(object):
 			
 if __name__ == "__main__":
 	obj = HTU21D()
-	print "Temp:", obj.read_tmperature(), "C"
+	print "Temp:", obj.read_temperature(), "C"
 	print "Humid:", obj.read_humidity(), "% rH"
