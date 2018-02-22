@@ -16,15 +16,13 @@
 			pkg="openaggdl" 
 			type="sensor_htu21df.py" 
 			name="htu21df_temp_1" >
-				<param name="temp" value="True" type="bool"/>
-				<param name="rate_hz" value="1" type="int"/>
+				<param name="rate_hz" value="60" type="int"/>
 		</node>
 
 		<node 
 			pkg="openaggdl" 
-			type="sensor_htu21df.py" 
-			name="htu21df_hum_1" >
-				<param name="temp" value="False" type="bool"/>
+			type="sensor_tsl2561.py" 
+			name="tsl2561_light_1" >
 				<param name="rate_hz" value="1" type="int"/>
 		</node>
 
