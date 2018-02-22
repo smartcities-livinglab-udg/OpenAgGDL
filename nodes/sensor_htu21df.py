@@ -27,7 +27,7 @@ if __name__ == '__main__':
 		if data_temp is not None:
 			htu21d_temp_pub.publish(data_temp)
 		
-		if data_hum in not None:
+		if data_hum is not None:
 			htu21d_hum_pub.publish(data_hum)
 			
 		r.sleep()

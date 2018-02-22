@@ -13,7 +13,7 @@ if __name__ == '__main__':
     rate = rospy.get_param("~rate_hz", 1)
     r = rospy.Rate(rate)
 
-    sensor = HTU21D()
+    sensor = TSL2561()
 
     tsl2561_pub = rospy.Publisher("light_intensity/raw", Float64, queue_size=10)
     
