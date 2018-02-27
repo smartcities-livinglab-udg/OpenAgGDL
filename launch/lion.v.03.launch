@@ -31,14 +31,14 @@
 			type="adc_ads1015.py" 
 			name="adc_1" >
 				<param name="rate_hz" value="0.0016666667" type="double"/>
-				<param name="a0" value=True type="bool"/>
+				<param name="a0" value="true" type="bool"/>
 				<param name="a0_topic" value="noise" type="str"/>
 				
-				<param name="a1" value=True type="bool"/>
+				<param name="a1" value="true" type="bool"/>
 				<param name="a1_topic" value="air_quality" type="str"/>
 				
-				<param name="a2" value=False type="bool"/>
-				<param name="a3" value=False type="bool"/>
+				<param name="a2" value="false" type="bool"/>
+				<param name="a3" value="false" type="bool"/>
 		</node>
 
 	</group>
