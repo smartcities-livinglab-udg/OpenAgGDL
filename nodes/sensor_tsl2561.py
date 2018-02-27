@@ -7,10 +7,8 @@ from std_msgs.msg import Float64
 """[requiered]sudo pip install tsl2561"""
 """[requiered]sudo pip install adafruit_gpio"""  
 from tsl2561 import TSL2561
-from libs.LogToFile import LogToFile
     
 if __name__ == '__main__':
-    LOG = LogToFile()
     rospy.init_node("sensor_tsl2561")
     rate = rospy.get_param("~rate_hz", 1)
     r = rospy.Rate(rate)
@@ -22,7 +20,7 @@ if __name__ == '__main__':
     while not rospy.is_shutdown():
 
         data = sensor.lux()
-        LOG.info("light_intensity/raw : [{}]".format(data))
+        rospy.loginfo("light_intensity/raw : [{}]".format(data))
         
         if data is not None:
             tsl2561_pub.publish(data)
