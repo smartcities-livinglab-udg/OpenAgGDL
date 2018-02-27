@@ -56,7 +56,7 @@ if __name__ == '__main__':
 
     while not rospy.is_shutdown():
 
-        for x in len(chanels):
+        for x in range(len(chanels)):
             data = read_chanel(chanels[x][0])
             rospy.loginfo("{} : [{}]".format(chanels[x][1], data))
         
