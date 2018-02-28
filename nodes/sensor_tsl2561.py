@@ -11,6 +11,7 @@ from tsl2561 import TSL2561
 if __name__ == '__main__':
     rospy.init_node("sensor_tsl2561")
     rate = rospy.get_param("~rate_hz", 1)
+    base_parms = "/var_types/environment_variables/{}"
     r = rospy.Rate(rate)
 
     sensor = TSL2561()
@@ -24,5 +25,6 @@ if __name__ == '__main__':
         
         if data is not None:
             tsl2561_pub.publish(data)
+            rospy.set_param(base_parms.format("light_intensity/last_value"), data)
         
         r.sleep()
