@@ -41,11 +41,15 @@ def create_topics(chanels):
 
     return topics
 
+def set_param(param_name, value):
+    rospy.set_param(param_name, value)
+
 if __name__ == '__main__':
     rospy.init_node("adc_ads1015")
     rate = rospy.get_param("~rate_hz", 1)
     r = rospy.Rate(rate)
     chanels = [] #[index_chanel, topic_chanel]
+    base_parms = "/var_types/environment_variables/{}{}"
 
     # ADS1015 tiene 4 canales
     for i in range(4):
@@ -59,8 +63,9 @@ if __name__ == '__main__':
         for x in range(len(chanels)):
             data = read_chanel(chanels[x][0])
             rospy.loginfo("{} : [{}]".format(chanels[x][1], data))
-        
+            
             if data is not None:
                 topics[x].publish(data)
+                set_param(base_parms.format(chanels[x][1], "/last_value"), data)
         
         r.sleep()

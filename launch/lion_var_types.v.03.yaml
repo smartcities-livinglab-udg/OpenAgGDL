@@ -5,16 +5,32 @@ environment_variables:
     description: "Temperature of the air in degrees Celcius"
     units: "degrees C"
     type: "std_msgs/Float64"
+    last_value: 0.0
   
   air_humidity:
     name: air_humidity
     description: "A measure of the concentration of water in the air relative to the maximum concentration at the current temperature"
     units: "percent relative"
     type: "std_msgs/Float64"
+    last_value: 0.0
+
+  air_quality:
+    name: air_quality
+    description: "A measure of the concentration of CO2 of the air"
+    units: "ppm"
+    type: "std_msgs/Float64"
+    last_value: 0.0
   
   light_intensity:
     name: light_intensity
     description: "The intensity setting for light panel"
     units: "percent relative"
     type: "std_msgs/Float64"
+    last_value: 0.0
 
+  noise:
+    name: noise_environment
+    description: "A measure of noise of the environment"
+    units: "decibels db"
+    type: "std_msgs/Float64"
+    last_value: 0.0
