@@ -20,7 +20,7 @@ adc = Adafruit_ADS1x15.ADS1015()
 #  -   8 = +/-0.512V
 #  -  16 = +/-0.256V
 # See table 3 in the ADS1015/ADS1115 datasheet for more info on gain.
-GAIN = 1
+GAIN = 2/3
 
 def read_chanel(chanel):
     # Read the specified ADC channel using the previously set gain value.
@@ -50,6 +50,7 @@ if __name__ == '__main__':
     r = rospy.Rate(rate)
     chanels = [] #[index_chanel, topic_chanel]
     base_parms = "/var_types/environment_variables/{}{}"
+    GAIN = rospy.get_param("~gain", GAIN) 
 
     # ADS1015 tiene 4 canales
     for i in range(4):
