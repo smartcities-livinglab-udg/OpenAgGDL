@@ -1,7 +1,9 @@
 #!/usr/bin/python
 import rospy
 import time
-from pymongo import MongoClient 
+from std_msgs.msg import Float64
+from pymongo import MongoClient
+from libs.load_env_var_types import create_variables
 
 ENVIRONMENT_VARIABLES = create_variables(rospy.get_param('/var_types/environment_variables'))
 
@@ -11,9 +13,13 @@ class SaveToDB:
 		self.db_col = db_col
 		self.topic = topic
 		self.sub  = rospy.Subscriber(topic, topic_type, self.on_data)
+		
 
 	def save(self, data):
-		self.db_col.update({"info.name":self.environment}, {"$push":{"records":data}})
+		try:
+			self.db_col.update({"info.name":self.environment}, {"$push":{"records":data}})
+		except Error:
+			rospy.logwarn("Error al intentar guardar datos en la base : {}".format(Error))
 		
 	def on_data(self, item):
 		timestamp = time.time()
@@ -24,24 +30,25 @@ class SaveToDB:
 			value = [ord(x) for x in value]
 
 		data = {"topic": self.topic,"value":value, "timestamp":timestamp}
+		self.save(data)
 
 
 def createSubcribers( db_col, environment ):
 	# Se crean subcripciones a partir de las variables declaradas en el archivo .yaml 
 	for topic_name in ENVIRONMENT_VARIABLES.itervalues():
 		topic_name = str(topic_name)
-		topic = "{}/measured".format(topic_name)
+		topic = "{}/raw".format(topic_name) #de manera formal se deberia guardar del topico */measure
 
 		SaveToDB( db_col=db_col, environment=environment, topic=topic, topic_type=Float64 )
 
 if __name__ == '__main__':
-	host = rospy.get_param("/mongodb_host")
-	port = rospy.get_param("/mongodb_port")
-	db = rospy.get_param("/mongodb_db", "openaggdl")
-	collection = rospy.get_param("/mongodb_col", "environments")
+	host = rospy.get_param("~mongodb_host", "localhost")
+	port = rospy.get_param("~mongodb_port", 27017)
+	db = rospy.get_param("~mongodb_db", "openaggdl")
+	collection = rospy.get_param("~mongodb_col", "environments")
 	db_col = MongoClient(host, port)[db][collection]
 
-	environment = rospy.get_param("~environment_name") #read_environment_from_ns(rospy.get_namespace())
+	environment = rospy.get_param("~environment_name", "astrid") #read_environment_from_ns(rospy.get_namespace())
 
 	rospy.init_node("sensor_persistence")
 
