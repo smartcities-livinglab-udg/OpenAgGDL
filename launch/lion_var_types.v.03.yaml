@@ -29,7 +29,7 @@ environment_variables:
     last_value: 0.0
 
   noise:
-    name: noise_environment
+    name: noise
     description: "A measure of noise of the environment"
     units: "decibels db"
     type: "std_msgs/Float64"
