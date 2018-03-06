@@ -1,8 +1,4 @@
 <launch>
-	<!--parametros mongodb-->
-	<rosparam name="mongodb_port" value="27017" type="int" />
-	<rosparam name="mongodb_host" value="0.0.0.0" type="str" />
-
 	<!--<arg name="environment_1" value="environments/environment_1" />-->
 
 	<rosparam command="load" file="$(find openaggdl)/launch/lion.v.03.yaml" />
@@ -47,6 +43,9 @@
 			pkg="openaggdl" 
 			type="save_db.py" 
 			name="sensor_persistence" >
+				<!--parametros mongodb-->
+				<param name="mongodb_port" value="27017" type="int" />
+				<param name="mongodb_host" value="0.0.0.0" type="str" />
 				<param name="environment_name" value="astrid" type="str"/>
 		</node>
 
