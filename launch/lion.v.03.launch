@@ -38,6 +38,22 @@
 				<param name="a1_topic" value="air_quality" type="str"/>
 
 		</node>
+		
+		<node 
+			pkg="openaggdl" 
+			type="adc_ads1015.py" 
+			name="soil" >
+				<!--<param name="rate_hz" value="0.0016666667" type="double"/>-->
+				<param name="rate_hz" value="1" type="double"/>
+								
+				<param name="a2" value="true" type="bool"/>
+				<param name="a2_topic" value="soil_humidity" type="str"/>
+
+		</node>
+
+
+
+		<!--	MONGODB	-->
 
 		<node 
 			pkg="openaggdl" 
@@ -49,6 +65,14 @@
 				<param name="environment_name" value="astrid" type="str"/>
 		</node>
 
+		<!--	ACTUADORES	-->
+
+		<node 
+			pkg="openaggdl" 
+			type="outputs_gpio.py" 
+			name="sensor_persistence" >
+		</node>
+	
 	</group>
 
 </launch>
