@@ -1,3 +1,5 @@
+//db : openaggdl
+//collection : environments
 {
 	"_id" : "xxxxxxxxxxx",
 	"info" : {
