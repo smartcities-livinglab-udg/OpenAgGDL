@@ -72,7 +72,7 @@
 		<node 
 			pkg="openaggdl" 
 			type="outputs_gpio.py" 
-			name="sensor_persistence" >
+			name="actuators" >
 		</node>
 	
 	</group>

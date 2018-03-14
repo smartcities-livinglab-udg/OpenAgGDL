@@ -44,7 +44,7 @@ def setup(PINES):
 
 if __name__ == '__main__':
 	
-	rospy.init_node("sensor_persistence")
+	rospy.init_node("actuators")
 	
 	PIN_A = rospy.get_param("~act_a", PIN_A)
 	PIN_B = rospy.get_param("~act_b", PIN_B)
@@ -60,7 +60,7 @@ if __name__ == '__main__':
 
 	environment = rospy.get_param("~environment_name", "astrid")
 	
-	setup(PINES)
+	setup(pines)
 
 	createSubcribers( pines, environment, topics )
 
