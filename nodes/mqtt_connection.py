@@ -78,7 +78,7 @@ def setupMQTT(host, topics, is_broker):
     if is_broker:
         BrokerMQTT(host=host, topics=topics)
     else:
-        ClientMQTT((host=host, topics=topics))
+        ClientMQTT(host=host)
 
 def brokerMQTT():
     #TODO: scanear la red y preguntar por el broker
