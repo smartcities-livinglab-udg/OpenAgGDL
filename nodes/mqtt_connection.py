@@ -83,7 +83,7 @@ def setupMQTT(host, topics, is_broker):
 def brokerMQTT():
     #TODO: scanear la red y preguntar por el broker
     #TODO: si no hay broker asignar al de ip mas chica
-    return rospy.getparam("~broker_ip", "0.0.0.0")
+    return rospy.get_param("~broker_ip", "0.0.0.0")
 
 def updateEnvironmentsList():
     #TODO: validar que los ambientes conectados a la red
