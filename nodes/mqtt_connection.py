@@ -42,8 +42,8 @@ class ClientMQTT:
 
     def setup(self):
         self.client = client.Client()#Crea el cliente mqtt
-        self.client.on_connect = on_connect # Metodo que crea la conexion con el broker
-        self.client.on_message = on_message # Metodo que recibe los mensajes            
+        self.client.on_connect = self.on_connect # Metodo que crea la conexion con el broker
+        self.client.on_message = self.on_message # Metodo que recibe los mensajes            
         self.client.connect(self.host, self.port, self.keepalive)#Ejecuta la conexion con el Broker, la direccion ip pertenece al broker
         self.client.loop_forever()#Ejecuta de forma ciclica todas las funciones de paho-mqtt
 

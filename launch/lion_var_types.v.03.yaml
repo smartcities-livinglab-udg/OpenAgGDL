@@ -35,7 +35,7 @@ environment_variables:
     type: "std_msgs/Float64"
     last_value: 0.0
   
-  soil:
+  soil_humidity:
     name: soil_humidity
     description: "A measure of humidity of the soil"
     units: "percent"
