@@ -74,6 +74,15 @@
 			type="outputs_gpio.py" 
 			name="actuators" >
 		</node>
+
+		<!--	MQTT	-->
+
+		<node 
+			pkg="openaggdl" 
+			type="mqtt_connection.py" 
+			name="mosquittero" >
+				<param name="broker_ip" value="148.202.24.126" type="str" />
+		</node>
 	
 	</group>
 
