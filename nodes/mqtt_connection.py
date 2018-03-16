@@ -95,7 +95,7 @@ if __name__ == '__main__':
     
     HOST_BROKER = brokerMQTT()
     #TOPICS = [ "test_topic" ]
-    is_broker = if HOST_BROKER.equals("0.0.0.0") else False
+    is_broker = True if HOST_BROKER.equals("0.0.0.0") else False
 
     setupMQTT(HOST_BROKER, is_broker)
 
