@@ -74,9 +74,10 @@ def createSubcribers( db_col, environment ):
 
         PublisherMQTT( db_col=db_col, environment=environment, topic=topic, topic_type=Float64 )
  """       
-def setupMQTT(host, topics, is_broker):
+def setupMQTT(host, is_broker):
     if is_broker:
-        BrokerMQTT(host=host, topics=topics)
+        #BrokerMQTT(host=host)
+        pass
     else:
         ClientMQTT(host=host)
 
