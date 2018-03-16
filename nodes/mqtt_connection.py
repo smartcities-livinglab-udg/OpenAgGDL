@@ -6,7 +6,7 @@ import paho.mqtt.publish as publish#indica que se utilizara como Broker y que en
 
 BASE_TOPIC_BRKR = ["/broker/bd/#","/broker/broadcast/#" ]
 BASE_TOPIC_CLI = "/environment/astrid/{}" # /environment/ENVIRONMENT_NAME/VAR_SUBJECT
-ENVIRONMENT_VARIABLES = create_variables(rospy.get_param('/var_types/environment_variables')) 
+#ENVIRONMENT_VARIABLES = create_variables(rospy.get_param('/var_types/environment_variables')) 
 #ENVIRONMENTS = ["astrid"]
 
 
