@@ -2,4 +2,8 @@ descargar proyecto en la ubicacion ~/catkin_ws/src/
 compilar paquete con comando catkin_make
 levantar ambiente haciendo uso de los archivos .launch [ roslaunch *.launch ]
 
+para la primera ejecucion es necesario instalar las librerias extras de python listadas en el archivo python_requirements.txt
+
+sudo pip install -r python_requirements.txt
+
 ~ by rasztul

@@ -1,12 +1,16 @@
 #!/usr/bin/python
 import rospy
 from std_msgs.msg import Float64
+import os
 import paho.mqtt.client as client#Indica que sera un cliente mqtt y solo recibira informacion
 import paho.mqtt.publish as publish#indica que se utilizara como Broker y que enviara mensajes
+import netifaces as ni # para consultar ip address
+from libs.load_env_var_types import create_variables
 
 BASE_TOPIC_BRKR = ["/broker/bd/#","/broker/broadcast/#" ]
 BASE_TOPIC_CLI = "/environment/astrid/{}" # /environment/ENVIRONMENT_NAME/VAR_SUBJECT
-#ENVIRONMENT_VARIABLES = create_variables(rospy.get_param('/var_types/environment_variables')) 
+IP = "0.0.0.0"
+ENVIRONMENT_VARIABLES = create_variables(rospy.get_param('/var_types/environment_variables')) 
 #ENVIRONMENTS = ["astrid"]
 
 
@@ -47,39 +51,52 @@ class ClientMQTT:
         self.client.connect(self.host, self.port, self.keepalive)#Ejecuta la conexion con el Broker, la direccion ip pertenece al broker
         self.client.loop_forever()#Ejecuta de forma ciclica todas las funciones de paho-mqtt
 
-"""class PublisherMQTT:
-   #docstring for PublishersMQTT
-    def __init__(self, arg):
-        self.environment = environment
-        self.db_col = db_col
+class PublishMQTT(object):
+    """docstring for PublishMQTT"""
+    def __init__(self, host, topic, topic_type):
+        self.host = host
         self.topic = topic
-        self.sub  = rospy.Subscriber(topic, topic_type, self.on_data)      
+        self.topic_type = topic_type
+        self.sub  = rospy.Subscriber(self.topic, self.topic_type, self.on_data)
 
-    def cast(self, topic, msg, environment_name):
-        #TODO: cuando publica ? -> modo bridge
-        #TODO: multicast to chanel
-        #
-        publish.single(topic, msg, hostname="environment.{}".format( environment_name ))
+    def cast(self, msg):
+        CMD = "mosquitto_pub -h {} -t '{}' -m {}".format(self.host, self.topic, msg)
+        os.system(CMD)
     
     def on_data(self, item):
-        # TODO: filtro para selecionar el chanel a publicar en MQTT
-        # TODO: cast a 
-        pass
+        timestamp = time.time()
+        value = item.data
+        # This is kind of a hack to correctly interpret UInt8MultiArray
+        # messages. There should be a better way to do this
+        if item._slot_types[item.__slots__.index('data')] == "uint8[]":
+            value = [ord(x) for x in value]
 
-def createSubcribers( db_col, environment ):
-    # Se crean subcripciones a partir de las variables declaradas en el archivo .yaml 
-    for topic_name in TOPICS:
-        topic_name = str(topic_name)
-        topic = "{}/raw".format(topic_name) #de manera formal se deberia guardar del topico */measure
+        msg = {"topic": self.topic,"value":value, "timestamp":timestamp}
+        self.cast(msg)
+        
 
-        PublisherMQTT( db_col=db_col, environment=environment, topic=topic, topic_type=Float64 )
- """       
+class BrokerMQTT:
+   #docstring for BrokerMQTT
+    def __init__(self, host):
+        self.host = host
+
+       
+    def createSubcribers( db_col, environment ):
+        # Se crean subcripciones a partir de las variables declaradas en el archivo .yaml 
+        for topic_name in ENVIRONMENT_VARIABLES.itervalues():
+            topic_name = str(topic_name)
+            topic = "{}/raw".format(topic_name) #de manera formal se deberia guardar del topico */measure
+
+            PublishMQTT( self.host, topic=topic, topic_type=Float64 )
+       
 def setupMQTT(host, is_broker):
     if is_broker:
-        #BrokerMQTT(host=host)
-        pass
+        BrokerMQTT(host=host)
     else:
         ClientMQTT(host=host)
+
+def myIp():
+    return ni.ifaddresses('eth0')[ni.AF_INET][0]['addr'] # should print "192.168.100.37"
 
 def brokerMQTT():
     #TODO: scanear la red y preguntar por el broker
@@ -95,8 +112,9 @@ if __name__ == '__main__':
     rospy.init_node("community")
     
     HOST_BROKER = brokerMQTT()
+    IP = myIp()
     #TOPICS = [ "test_topic" ]
-    is_broker = True if HOST_BROKER == "0.0.0.0" else False
+    is_broker = True if HOST_BROKER == "0.0.0.0" || HOST_BROKER == IP else False
 
     setupMQTT(HOST_BROKER, is_broker)
 
