@@ -114,7 +114,7 @@ if __name__ == '__main__':
     HOST_BROKER = brokerMQTT()
     IP = myIp()
     #TOPICS = [ "test_topic" ]
-    is_broker = True if HOST_BROKER == "0.0.0.0" || HOST_BROKER == IP else False
+    is_broker = True if HOST_BROKER == "0.0.0.0" | HOST_BROKER == IP else False
 
     setupMQTT(HOST_BROKER, is_broker)
 
