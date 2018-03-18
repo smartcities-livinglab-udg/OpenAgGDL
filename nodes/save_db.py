@@ -8,6 +8,19 @@ from libs.load_env_var_types import create_variables
 ENVIRONMENT_VARIABLES = create_variables(rospy.get_param('/var_types/environment_variables'))
 
 class SaveToDB:
+	"""docstring for SaveToDB"""
+	def __init__(self, db_col, environment):
+		self.db_col = db_col
+		self.environment = environment
+
+	def save(self, data):
+		try:
+			self.db_col.update({"info.name":self.environment}, {"$push":{"records":data}})
+		except Error:
+			rospy.logwarn("Error al intentar guardar datos en la base : {}".format(Error))
+		
+
+class SubscriberToDB:
 	def __init__(self, db_col, environment, topic, topic_type):
 		self.environment = environment
 		self.db_col = db_col
@@ -17,7 +30,7 @@ class SaveToDB:
 
 	def save(self, data):
 		try:
-			self.db_col.update({"info.name":self.environment}, {"$push":{"records":data}})
+			SaveToDB(self.db_col, self.environment).save(data)
 		except Error:
 			rospy.logwarn("Error al intentar guardar datos en la base : {}".format(Error))
 		
@@ -39,7 +52,7 @@ def createSubcribers( db_col, environment ):
 		topic_name = str(topic_name)
 		topic = "{}/raw".format(topic_name) #de manera formal se deberia guardar del topico */measure
 
-		SaveToDB( db_col=db_col, environment=environment, topic=topic, topic_type=Float64 )
+		SubscriberToDB( db_col=db_col, environment=environment, topic=topic, topic_type=Float64 )
 
 if __name__ == '__main__':
 	host = rospy.get_param("~mongodb_host", "localhost")
