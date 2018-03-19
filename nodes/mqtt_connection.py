@@ -15,17 +15,14 @@ ENVIRONMENT_VARIABLES = create_variables(rospy.get_param('/var_types/environment
 IS_BROKER = False
 #ENVIRONMENTS = ["astrid"]
 
-class SetupMQTT:
-    """docstring for SetupMQTT"""
-    def __init__(self, host="0.0.0.0", topic="", topic_type=Float64, port=1883, keepalive=60):
-        self.host = host
+class ROSSubscriber:
+    """docstring for ROSSubscriber"""
+    def __init__(self, mqtt, topic="", topic_type=Float64):
+        self.mqtt = mqtt #instancia creada de mqtt
         self.topic = topic # topic for ROS
         self.topic_type = topic_type # type_topic for ROS
-        self.port = port
-        self.keepalive = keepalive
         # subcribe to topic ROS
         self.sub  = rospy.Subscriber(self.topic, self.topic_type, self.on_data)
-        self.setup_MQTT()
 
     def on_data(self, item):
         # function on event from ROS
@@ -38,15 +35,24 @@ class SetupMQTT:
 
         msg = {"environment":ENVIRONMENT,"topic": self.topic,"value":value, "timestamp":timestamp}
         topic_save = BASE_TOPIC_CLI.format(ENVIRONMENT, "save")
-        self.publisher(self.filterTopic(topic_save), msg)
-    
+        self.mqtt.publisher(str(topic_save), msg)
+        
+
+class SetupMQTT:
+    """docstring for SetupMQTT"""
+    def __init__(self, host="0.0.0.0", port=1883, keepalive=60):
+        self.host = host
+        self.port = port
+        self.keepalive = keepalive
+        self.setup_MQTT()
+
     def setup_MQTT(self):
         # Setup MQTT Client
         self.client = client.Client()#Crea el cliente mqtt
         self.client.on_connect = self.on_connect # Metodo que crea la conexion con el broker
         self.client.on_message = self.on_message # Metodo que recibe los mensajes            
         self.client.connect(self.host, self.port, self.keepalive)#Ejecuta la conexion con el Broker, la direccion ip pertenece al broker
-        self.client.loop_forever()#Ejecuta de forma ciclica todas las funciones de paho-mqtt
+        self.client.loop_start()#inicia un hilo que se conecta con el broker
 
     def on_connect(self, client, userdata, flags, rc):
         # subscribe to MQTT channels 
@@ -75,6 +81,7 @@ class SetupMQTT:
 
     def publisher(self, topic, msg):
         # publica MQTT en modo cliente
+        topic = self.filterTopic(topic) # filtra el topico si es broker
         rospy.loginfo("PUBLISH TO mqtt:{} THIS : {}".format(topic, msg))
         self.client.publish(str(topic), str(msg))
 
@@ -86,12 +93,15 @@ class SetupMQTT:
         
 
 def createROSSubcribers( host ):
+    
+    MQTT = SetupMQTT( host=host ) # se crea una instancia para mqtt
+    
     # Se crean subcripciones a partir de las variables declaradas en el archivo .yaml 
     for topic_name in ENVIRONMENT_VARIABLES.itervalues():
         topic_name = str(topic_name)
         topic = "{}/raw".format(topic_name) #de manera formal se deberia guardar del topico */measure
 
-        SetupMQTT( host=host, topic=topic, topic_type=Float64 )
+        ROSSubscriber( mqtt=MQTT, topic=topic, topic_type=Float64 )
        
 def myIp():
     return ni.ifaddresses('eth0')[ni.AF_INET][0]['addr'] # should print "192.168.100.37"
