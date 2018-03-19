@@ -63,12 +63,13 @@ class SetupMQTT:
     def on_message(self, client, userdata, msg):#Actividad que realizara cada vez que recibe un mensaje
         rospy.logwarn("We got a message")
         rospy.logwarn("{} {}".format(msg.topic, msg.payload))#imprime el topico de donde vino y el mensaje importo paho.mqtt.client as mqtt
+        self.cast(str(self.filterTopic(msg.topic)), str(msg.payload))
 
     def filterTopic(self, fromTopic):
         topic = fromTopic
         
         if ("save" in fromTopic) & IS_BROKER:
-            topic = "/broaker/db/save"
+            topic = "/broker/db/save"
 
         return topic
 
@@ -80,7 +81,7 @@ class SetupMQTT:
     def cast(self,topic="/broker/broadcast/cmd", msg=""):
         #publica MQTT en modo Broker
         # TODO: publica mensages en el topico general
-        publish.single(srt(topic), str(msg))
+        publish.single(str(topic), str(msg))
 
         
 
