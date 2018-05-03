@@ -1,9 +1,29 @@
-descargar proyecto en la ubicacion ~/catkin_ws/src/
-compilar paquete con comando catkin_make
-levantar ambiente haciendo uso de los archivos .launch [ roslaunch *.launch ]
+Descargar proyecto en la ubicacion ~/catkin_ws/src/
+Compilar paquete con comando 
 
-para la primera ejecucion es necesario instalar las librerias extras de python listadas en el archivo python_requirements.txt
+	$ cd ~/catkin_ws
+	$ catkin_make
 
-sudo pip install -r python_requirements.txt
+Iniciar ambiente haciendo uso de los archivos .launch [ roslaunch *.launch ]
+	
+	$ roscd openaggdl
+	$ roslauch launch/lion.v.1.launch
+
+El archivo launch/lion.v.1.launch contiene los nodos y parámetros que se usarán en el ambiente de ROS
+
+!!!	IMPORTANTE ¡¡¡
+
+Para la primera ejecucion es necesario instalar las librerias extras de python listadas en el archivo extras/python_requirements.txt
+
+	$ sudo pip install -r extras/python_requirements.txt
+
+Instalar base de datos
+	
+	$ sudo apt-get install mongodb
+
+Una vez instalado MongoDB se agrega el usuario local y la información inicial del ambiente con el archivo extras/openaggdl.astrid.v1.mongodb.js
+	
+	$ mongo openaggdl openaggdl.astrid.v1.mongodb.js
+
 
 ~ by rasztul
