@@ -15,6 +15,7 @@ El archivo launch/lion.v.1.launch contiene los nodos y parámetros que se usará
 
 Para la primera ejecucion es necesario instalar las librerias extras de python listadas en el archivo extras/python_requirements.txt
 
+	$ roscd openaggdl
 	$ sudo pip install -r extras/python_requirements.txt
 
 Instalar base de datos
@@ -23,7 +24,12 @@ Instalar base de datos
 
 Una vez instalado MongoDB se agrega el usuario local y la información inicial del ambiente con el archivo extras/openaggdl.astrid.v1.mongodb.js
 	
-	$ mongo openaggdl openaggdl.astrid.v1.mongodb.js
+	$ roscd openaggdl
+	$ mongo openaggdl extras/openaggdl.astrid.v1.mongodb.js
 
+Para acceder a las salidas de GPIO es necesario ejecutar los siguientes comandos
+	
+	$ sudo chown root:gpio /dev/gpiomem
+	$ sudo chmod g+rw /dev/gpiomem
 
 ~ by rasztul

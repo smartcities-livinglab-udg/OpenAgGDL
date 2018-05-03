@@ -57,6 +57,9 @@ def createSubcribers( db_col, environment ):
 		SubscriberToDB( db_col=db_col, environment=environment, topic=topic, topic_type=Float64 )
 
 if __name__ == '__main__':
+	
+	rospy.init_node("sensor_persistence")
+
 	host = rospy.get_param("~mongodb_host", "localhost")
 	port = rospy.get_param("~mongodb_port", 27017)
 	user = rospy.get_param("~mongodb_user")
@@ -64,12 +67,11 @@ if __name__ == '__main__':
 	db = rospy.get_param("~mongodb_db", "openaggdl")
 	collection = rospy.get_param("~mongodb_col", "records") # coleccion donde se guardan los datos recibidos
 	
-	uri = "mongodb://{}:{}@{}:{}/{}".format(quote_plus(user), quote_plus(pwd), quote_plus(host), quote_plus(port), quote_plus(db))
+	uri = "mongodb://{}:{}@{}:{}/{}".format(quote_plus(user), quote_plus(pwd), quote_plus(host), quote_plus(str(port)), quote_plus(db))
 	db_col = MongoClient(uri)[db][collection]
 
 	environment = rospy.get_param("~environment_name", "astrid") #read_environment_from_ns(rospy.get_namespace())
 
-	rospy.init_node("sensor_persistence")
 
 	createSubcribers(db_col, environment)
 
