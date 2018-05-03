@@ -24,6 +24,7 @@ class Actuator:
 			value = [ord(x) for x in value]
 
 		GPIO.output(self.pin, int(value))
+		rospy.logdebug("Actuator.on_data : {} PIN:{}".format(value, self.pin))
 		
 
 def createSubcribers( pines, environment, topics ):
@@ -39,6 +40,7 @@ def createSubcribers( pines, environment, topics ):
 
 def setup(PINES):
 	GPIO.setmode(GPIO.BOARD) #Inicializamos la tarjeta con la numeracion fisica/eleccion de los pines modo board
+	GPIO.setwarnings(False)
 	for _pin in PINES:
 		GPIO.setup(_pin, GPIO.OUT)
 

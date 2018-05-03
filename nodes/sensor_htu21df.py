@@ -25,9 +25,9 @@ if __name__ == '__main__':
 	while not rospy.is_shutdown():
 
 		data_temp = sensor.read_temperature()
-		rospy.loginfo("air_temperature/raw : [{}]".format(data_temp))
+		#rospy.loginfo("air_temperature/raw : [{}]".format(data_temp))
 		data_hum = sensor.read_humidity()
-		rospy.loginfo("air_humidity/raw : [{}]".format(data_hum))
+		#rospy.loginfo("air_humidity/raw : [{}]".format(data_hum))
 		
 		if data_temp is not None:
 			htu21d_temp_pub.publish(data_temp)

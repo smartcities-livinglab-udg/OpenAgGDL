@@ -56,19 +56,19 @@ class SetupMQTT:
 
     def on_connect(self, client, userdata, flags, rc):
         # subscribe to MQTT channels 
-        rospy.loginfo("Connected with result code {}".format(rc))#indica el ID de conexion, un resultado 0 es optimo
+        rospy.logwarn("Connected with result code {}".format(rc))#indica el ID de conexion, un resultado 0 es optimo
         # Se subscribe a los canales MQTT particulares del ambiente
         topic = BASE_TOPIC_CLI.format(ENVIRONMENT, "#") # /environment/ENVIRONMENT_NAME/VAR_SUBJEC/# hashtag equivale a * comodin
         client.subscribe(topic)#indica al topico que se va a suscribir
-        rospy.loginfo("client MQTT subscribed to : {}".format(topic))
+        rospy.logwarn("client MQTT subscribed to : {}".format(topic))
 
         # - Se subscribe al canal MQTT general del broker 
         client.subscribe("/broker/broadcast/#")
-        rospy.loginfo("client MQTT subscribed to : /broker/broadcast/#")
+        rospy.logwarn("client MQTT subscribed to : /broker/broadcast/#")
 
     def on_message(self, client, userdata, msg):#Actividad que realizara cada vez que recibe un mensaje
-        rospy.logwarn("We got a message")
-        rospy.logwarn("{} {}".format(msg.topic, msg.payload))#imprime el topico de donde vino y el mensaje importo paho.mqtt.client as mqtt
+        rospy.logdebug("on_message: We got a message")
+        rospy.logdebug("{} {}".format(msg.topic, msg.payload))#imprime el topico de donde vino y el mensaje importo paho.mqtt.client as mqtt
         self.cast(str(self.filterTopic(msg.topic)), str(msg.payload))
 
     def filterTopic(self, fromTopic):
@@ -82,7 +82,7 @@ class SetupMQTT:
     def publisher(self, topic, msg):
         # publica MQTT en modo cliente
         topic = self.filterTopic(topic) # filtra el topico si es broker
-        rospy.loginfo("PUBLISH TO mqtt:{} THIS : {}".format(topic, msg))
+        rospy.logdebug("PUBLISH TO mqtt:{} THIS : {}".format(topic, msg))
         self.client.publish(str(topic), str(msg))
 
     def cast(self,topic="/broker/broadcast/cmd", msg=""):

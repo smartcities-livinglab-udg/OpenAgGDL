@@ -1,8 +1,10 @@
 #!/usr/bin/python
+"""Nodo usado como local storageclear"""
 import rospy
 import time
 from std_msgs.msg import Float64
 from pymongo import MongoClient
+from urllib import quote_plus
 from libs.load_env_var_types import create_variables
 
 ENVIRONMENT_VARIABLES = create_variables(rospy.get_param('/var_types/environment_variables'))
@@ -15,7 +17,7 @@ class SaveToDB:
 
 	def save(self, data):
 		try:
-			self.db_col.update({"info.name":self.environment}, {"$push":{"records":data}})
+			self.db_col.insert(data)
 		except Error:
 			rospy.logwarn("Error al intentar guardar datos en la base : {}".format(Error))
 		
@@ -57,9 +59,13 @@ def createSubcribers( db_col, environment ):
 if __name__ == '__main__':
 	host = rospy.get_param("~mongodb_host", "localhost")
 	port = rospy.get_param("~mongodb_port", 27017)
+	user = rospy.get_param("~mongodb_user")
+	pwd = rospy.get_param("~mongodb_pwd")
 	db = rospy.get_param("~mongodb_db", "openaggdl")
-	collection = rospy.get_param("~mongodb_col", "environments")
-	db_col = MongoClient(host, port)[db][collection]
+	collection = rospy.get_param("~mongodb_col", "records") # coleccion donde se guardan los datos recibidos
+	
+	uri = "mongodb://{}:{}@{}:{}/{}".format(quote_plus(user), quote_plus(pwd), quote_plus(host), quote_plus(port), quote_plus(db))
+	db_col = MongoClient(uri)[db][collection]
 
 	environment = rospy.get_param("~environment_name", "astrid") #read_environment_from_ns(rospy.get_namespace())
 
