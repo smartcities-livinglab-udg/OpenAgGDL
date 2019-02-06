@@ -118,7 +118,7 @@ def updateEnvironmentsList():
 
 if __name__ == '__main__':
     rospy.init_node("community")
-    
+    ENVIRONMENT = rospy.get_param("~environment_name", "astrid")
     HOST_BROKER = brokerMQTT() # obtiene la direccion del broker
     IP = myIp() 
     IS_BROKER = True if (HOST_BROKER == "0.0.0.0") | (HOST_BROKER == IP) else False
