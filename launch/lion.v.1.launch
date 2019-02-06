@@ -15,21 +15,21 @@
 			pkg="openaggdl" 
 			type="sensor_htu21df.py" 
 			name="htu21df_temp_1" >
-				<param name="rate_hz" value="0.0016666667" type="double"/>
+				<param name="rate_hz" value="0.001666667" type="double"/>
 		</node>
 
 		<node 
 			pkg="openaggdl" 
 			type="sensor_tsl2561.py" 
 			name="tsl2561_light_1" >
-				<param name="rate_hz" value="0.0016666667" type="double"/>
+				<param name="rate_hz" value="0.001666667" type="double"/>
 		</node>
 
 		<node 
 			pkg="openaggdl" 
 			type="adc_ads1015.py" 
 			name="noise" >
-				<param name="rate_hz" value="0.0016666667" type="double"/>
+				<param name="rate_hz" value="0.001666667" type="double"/>
 				<param name="a0" value="true" type="bool"/>
 				<param name="a0_topic" value="noise" type="str"/>
 		</node>
@@ -38,7 +38,7 @@
 			pkg="openaggdl" 
 			type="adc_ads1015.py" 
 			name="air_quality" >
-				<param name="rate_hz" value="0.0016666667" type="double"/>
+				<param name="rate_hz" value="0.001666667" type="double"/>
 				<param name="a1" value="true" type="bool"/>
 				<param name="a1_topic" value="air_quality" type="str"/>
 		</node>
@@ -47,7 +47,7 @@
 			pkg="openaggdl" 
 			type="adc_ads1015.py" 
 			name="soil" >
-				<param name="rate_hz" value="0.0016666667" type="double"/>		
+				<param name="rate_hz" value="0.001666667" type="double"/>		
 				<param name="a2" value="true" type="bool"/>
 				<param name="a2_topic" value="soil_humidity" type="str"/>
 
@@ -68,13 +68,13 @@
 		</node>
 
 		<!--	ACTUADORES	-->
-
+<!--
 		<node 
 			pkg="openaggdl" 
 			type="outputs_gpio.py" 
 			name="actuators" >
 		</node>
-
+-->
 		<!--	MQTT	-->
 
 		<node 
@@ -83,7 +83,7 @@
 			name="mosquittero" >
 				<param name="broker_ip" value="148.202.24.226" type="str" />
 		</node>
-	
+
 	</group>
 
 </launch>
